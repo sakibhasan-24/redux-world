@@ -3,23 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   depositMoney,
   loanRequest,
-  withdrawMoney,
   payLoan,
+  withdrawMoney,
 } from "../redux/account/accountSlice";
-
+// payLoan
+depositMoney;
 export default function Accounts() {
   let totalAmount = 1200;
   const fullName = useSelector((state) => state.customer.fullName);
-  const account = useSelector((state) => state.account);
-  //   console.log(account.loan);
+  const account = useSelector((store) => store.account);
+  console.log(account);
+  //   console.log(fullName);
   const dispatch = useDispatch();
   const [depositAmount, setDepositAmout] = useState("");
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [loanAmount, setLoanAmount] = useState("");
   const [loanPurpose, setLoanPurpose] = useState("");
+  const [currency, setCurrency] = useState("BDT");
 
   const handleDeposit = () => {
     if (!depositAmount) return;
+    // console.log(currency);
     dispatch(depositMoney(Number(depositAmount)));
 
     setDepositAmout("");
@@ -41,7 +45,7 @@ export default function Accounts() {
     dispatch(payLoan());
   };
 
-  console.log(account);
+  //   console.log(currency);
   return (
     <div className="my-6">
       <h1 className="text-center font-bold text-2xl ">Transactiosn</h1>
@@ -49,7 +53,7 @@ export default function Accounts() {
       <div>
         <div className="flex gap-4 items-center justify-center">
           <p className="text-2xl font-bold text-slate-600">
-            $<span className="text-4xl">{totalAmount}</span>
+            $<span className="text-4xl">{account.balance}</span>
           </p>
         </div>
       </div>
@@ -62,6 +66,15 @@ export default function Accounts() {
             value={depositAmount}
             onChange={(e) => setDepositAmout(e.target.value)}
           />
+          <select
+            name="currency"
+            id="currency"
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value)}
+          >
+            <option value="BDT">BDT</option>
+            <option value="USD">USD</option>
+          </select>
           <button
             onClick={handleDeposit}
             className="bg-slate-700 text-slate-50 rounded-md p-1 text-xs"
@@ -124,3 +137,6 @@ export default function Accounts() {
     </div>
   );
 }
+
+// reducer need to be pure function,no side effect
+// no asynchronous operation

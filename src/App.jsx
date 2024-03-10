@@ -85,7 +85,7 @@ import { useSelector } from "react-redux";
 
 export default function App() {
   const email = useSelector((state) => state.customer.email);
-  console.log(email);
+  // console.log(email);
   return (
     <div className="w-full p-4 sm:max-w-4xl mx-auto sm:p-20">
       {/* {email && <Accounts />}
