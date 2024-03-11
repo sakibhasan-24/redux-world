@@ -12,7 +12,7 @@ export default function Accounts() {
   let totalAmount = 1200;
   const fullName = useSelector((state) => state.customer.fullName);
   const account = useSelector((store) => store.account);
-  console.log(account);
+  // console.log(account);
   //   console.log(fullName);
   const dispatch = useDispatch();
   const [depositAmount, setDepositAmout] = useState("");
@@ -41,8 +41,9 @@ export default function Accounts() {
     setLoanPurpose("");
   };
   const payLoanAmout = () => {
-    // dispatch(payLoan);
+    console.log(account);
     dispatch(payLoan());
+    // dispatch(payLoan());
   };
 
   //   console.log(currency);

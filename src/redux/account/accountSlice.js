@@ -88,15 +88,29 @@ const accountSlice = createSlice({
     withdrawMoney: (state, action) => {
       state.balance -= action.payload;
     },
-    loanRequest: (state, action) => {
-      state.balance += action.payload.amount;
-      state.loan += action.payload.amount;
-      state.whyLoan = action.payload.loanNeededFor;
-      state.payLoanTime = action.payload.payLoanTime;
+    loanRequest: {
+      // data prepare
+      prepare(amount, loanNeededFor, payLoanTime = 3) {
+        return {
+          payload: {
+            amount,
+            loanNeededFor,
+            payLoanTime,
+          },
+        };
+      },
+      reducer(state, action) {
+        state.balance += action.payload.amount;
+        state.loan += action.payload.amount;
+        state.whyLoan = action.payload.loanNeededFor;
+        state.payLoanTime = action.payload.payLoanTime;
+      },
     },
-    payLoan: (state) => {
-      state.loan = 0;
+    payLoan: (state, action) => {
+      //   console.log(state);
       state.balance -= state.loan;
+      state.loan = 0;
+
       state.whyLoan = "";
     },
   },
